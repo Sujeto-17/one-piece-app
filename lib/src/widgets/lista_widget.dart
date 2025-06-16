@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onepiece_list/src/pages/detail_page.dart';
 
 class ListaPersonajes extends StatefulWidget {
   const ListaPersonajes({super.key});
@@ -39,12 +41,12 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
             thickness: 2,
             color: Color.fromARGB(255, 62, 62, 62),
           ),
-          bloquePersonajes("Brock", 0xff21E295, "o1"),
-          bloquePersonajes("Brock", 0xff21E295, "o2"),
-          bloquePersonajes("Brock", 0xff21E295, "o3"),
-          bloquePersonajes("Brock", 0xff21E295, "o4"),
-          bloquePersonajes("Brock", 0xff21E295, "o5"),
-          bloquePersonajes("Brock", 0xff21E295, "o6"),
+          bloquePersonajes("Brock", 0xff4913C4, "o1"),
+          bloquePersonajes("Luffy", 0xFFF82A2D, "o2"),
+          bloquePersonajes("Portgas D. Ace", 0xffFFCB28, "o3"),
+          bloquePersonajes("Boa Hancock", 0xffFE4649, "o4"),
+          bloquePersonajes("Boa Hancock", 0xffDF1C6A, "o5"),
+          bloquePersonajes("Roronoa Zoro", 0xff21E295, "o6"),
         ],
       ),
     );
@@ -84,41 +86,61 @@ class _ListaPersonajesState extends State<ListaPersonajes> {
   }
 
   Widget bloquePersonajes(String nombre, int color, String imagen) {
-    return Container(
-      margin: EdgeInsets.only(top: 20),
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Color.fromARGB(66, 43, 43, 43),
-      ),
-      height: 65,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 8,
-                      offset: Offset(0, 5),
-                      spreadRadius: 0.0,
-                      blurStyle: BlurStyle.normal,
-                      color: Color(color),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: EdgeInsets.all(8),
-                child: Image.asset("assets/$imagen.png"),
-              ),
-              SizedBox(width: 12),
-              Text(nombre, style: TextStyle(fontSize: 16, color: Colors.white)),
-            ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          CupertinoPageRoute(
+            builder:
+                ((context) => DetailPage(
+                  color: color,
+                  image: "assets/$imagen.png",
+                  nombre: nombre,
+                )),
           ),
-          IconButton(onPressed: (){}, icon: Icon(Icons.more_vert_rounded, color: Colors.grey))
-        ],
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Color.fromARGB(66, 43, 43, 43),
+        ),
+        height: 65,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 8,
+                        offset: Offset(0, 5),
+                        spreadRadius: 0.0,
+                        blurStyle: BlurStyle.normal,
+                        color: Color(color),
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.all(8),
+                  child: Hero(tag: color, child: Image.asset("assets/$imagen.png")),
+                ),
+                SizedBox(width: 12),
+                Text(
+                  nombre,
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ],
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.more_vert_rounded, color: Colors.grey),
+            ),
+          ],
+        ),
       ),
     );
   }
